@@ -83,6 +83,7 @@ let CalcXp = function(duck1){
 
 let roundRestart = () =>{
     $("#duckselect").css("display", "block");
+    $("#duckpond").append($("#duck"+pdIndex));
     $("#duckpond").append($("#duck"+edIndex));
     $(".select").css('pointer-events', 'auto');
     $("#statbox").css("display","block");
@@ -103,7 +104,7 @@ let Attack =function(duck1,duck2){
     if(duck2.health <= 0){
         console.log("You have defeated "+duck2.name+"!");
         wins++
-        roundRestart();
+       
     }
     if(duck2.health >0 && duck1.health >0){
     duck2.health -= damage;
@@ -117,7 +118,7 @@ let Defend = function(duck1,duck2) {
 
     if(duck1.health <= 0){
         console.log("You have been defeated");
-        roundRestart();  
+          
         defeat++;
     }
     if(duck1.health >= 0 && duck2.health >= 0){
