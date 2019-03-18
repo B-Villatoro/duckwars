@@ -8,6 +8,7 @@ const levelXp ={
     7:700,
     8:950,
 }
+
  // Character Ducks
 let duckArray = [
     
@@ -15,7 +16,7 @@ let duckArray = [
     name: "Obi Wan Duckobi",
     health: 100,
     attack: 10,
-    defense: 10,
+    defense: 12,
     xp : 0,
     level : 1,
     },
@@ -23,8 +24,8 @@ let duckArray = [
     {
     name: "Duck Skywaddler",
     health: 110,
-    attack: 8,
-    defense: 12,
+    attack: 80,
+    defense: 18,
     xp : 0,
     level : 1,
 
@@ -56,7 +57,14 @@ let duckArray = [
 let myDuck;
 let select = false;
 let selector = false;
+let playerDuck = false;
+let enemyDuck = false;
+let index = 0;
+let pdIndex ;
+let edIndex ;
+let atkBtnOn = false;
 //My Functions
+
 
 
 let CalcXp = function(duck1){
@@ -66,16 +74,34 @@ let CalcXp = function(duck1){
     }
 }
 
+
+
 let Attack =function(duck1,duck2){
     let damage = (duck1.attack+((duck1.level-1)*5)) - Math.floor(duck2.defense*.5);
-    if(duck2.health >0){
+    if(duck2.health <= 0){
+        console.log("You have defeated "+duck2.name+"!");
+    }
+    if(duck2.health >0 && duck1.health >0){
     duck2.health -= damage;
     CalcXp(duck1);
-        if(duck2.health <= 0){
-            console.log("You have defeated "+duck2.name+"!");
-        }
+    }
+    
+}
+
+let Defend = function(duck1,duck2) {
+    let damage = duck2.attack- Math.floor(duck1.defense*.5);
+
+    if(duck1.health <= 0){
+        console.log("You have been defeated");
+    }
+    if(duck1.health >= 0 && duck2.health >= 0){
+        duck1.health -=damage;     
+        
     }
 }
+
+
+
 
 let assignDucks = function(){
     for(var i =0; i < 4; i++){     
@@ -88,50 +114,117 @@ let assignDucks = function(){
 let SelectDuck = function(){
     if(selector === false){
 
-        $(".select").on("click",function(){
+        $(".select").on("click",function(e){
+            index = e.target.id.slice(4);
+            console.log(index)
+
             $('[select="this"]').css({"outline": "0px"});
             $('[select="this"]').removeAttr("select");
             $(this).css({"outline": "5px solid red"});
             $(this).attr("select","this");
+            select = true;
             
-            for(let j = 0; j<4;j++){
-                if(this.attributes.name.value == duckArray[j].name){
-                console.log(duckArray[j].name);
-                $("#stats").html(duckArray[j].name +"<br>Health: "+duckArray[j].health+"<br>Attack: "+duckArray[j].attack+"<br>Defense: "
-                +duckArray[j].defense+"<br>Level: "+duckArray[j].level);
+                if(this.attributes.name.value == duckArray[index].name){
+                console.log(duckArray[index].name);
+                $("#stats").html(duckArray[index].name +"<br>Health: "+duckArray[index].health+"<br>Attack: "+duckArray[index].attack+"<br>Defense: "
+                +duckArray[index].defense+"<br>Level: "+duckArray[index].level);
                     
-                select = true;
-                return myDuck = duckArray[j];
+                
+                return myDuck = duckArray[index];
                 
                 }          
-            }                             
+                                       
         })
     }
-    else if(selector == true){
-        console.log("lockedout");
-    }
+   
 }
+
 
 let lockIn = function(){
-    $(".btn").on("click",function(){
-        console.log("click");
-        $(".select").css('pointer-events', 'none'); // disable
+        $("#lckbtn").on("click",function(){
+            
 
-        $("#statbox").remove();
-        $("#duckselect").append('class ="col-12"');
-        console.log($('[select="this"]'));
+            
+            
+            if(playerDuck && enemyDuck && $("#duck"+pdIndex) != $('#duck'+edIndex)){
+                atkBtnOn = true;
+                $("#duckselect").css("display", "none");
+                $('[select="this"]').removeAttr("select");
+               
+                
+                
+                
+            }
+
+          
+            if(select && playerDuck && pdIndex != index){
+             
+          
+                $('#enemyside').append($('[select="this"]'));
+                enemyDuck = true;
+                $('#fightbox').append()
+                $("#lckbtn").text("Fight!");
+                select = false;
+                edIndex = parseInt(index);
+                console.log("enemy index "+edIndex);
+                $(".select").css('pointer-events', 'none'); // disable
+                $('[select="this"]').removeAttr("select");
+                
+
+            }
+
+            
+            
+
+            if(select && $("#duck"+pdIndex) != $('#duck'+edIndex) ){
+                console.log("click");
+                // $("#duck"+index).css('pointer-events', 'none'); // disable
+
+                $("#statbox").remove();
+                $("#duckselect").removeClass('col-8');
+                $("#duckselect").addClass('col-12');
+                
+                $('#playerside').append($('[select="this"]'));
+                $('[select="this"]').removeAttr("select");
+                
+
+                playerDuck = true;
+                pdIndex = parseInt(index);
+                console.log("player index "+ pdIndex);
+                
+               
+            }   
+            
+            
+
+        })
+ }
+
+attackbtn = () =>  {
+    $("#atkbtn").on("click",function(){
+        
+        if(atkBtnOn){
+
+        Attack(duckArray[pdIndex],duckArray[edIndex]);
+        console.log(duckArray[pdIndex].health,duckArray[edIndex].health);
+
+        Defend(duckArray[pdIndex],duckArray[edIndex]);
+        console.log(duckArray[pdIndex].health,duckArray[edIndex].health);
+        
+        }
 
         
-        
-
     })
 }
+
 
 //main function
 $(document).ready(function(){
     SelectDuck();
     lockIn();
      assignDucks();
+     attackbtn();
+     
     
     
 })
