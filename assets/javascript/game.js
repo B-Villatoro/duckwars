@@ -13,6 +13,8 @@ const levelXp ={
 let duckArray = [
     
     {
+
+    maxHealth : 100,
     name: "Obi Wan Duckobi",
     health: 100,
     attack: 10,
@@ -22,6 +24,7 @@ let duckArray = [
     },
 
     {
+    maxHealth : 110,        
     name: "Duck Skywaddler",
     health: 110,
     attack: 80,
@@ -32,6 +35,7 @@ let duckArray = [
     },
 
     {
+    maxHealth : 90,
     name: "Duck Vader",
     health: 90,
     attack: 18,
@@ -42,6 +46,7 @@ let duckArray = [
     },
 
     {
+    maxHealth: 70,
     name: "Duck Maul",
     health: 70,
     attack: 25,
@@ -63,6 +68,8 @@ let index = 0;
 let pdIndex ;
 let edIndex ;
 let atkBtnOn = false;
+let wins = 0;
+let defeat = 0;
 //My Functions
 
 
@@ -74,12 +81,29 @@ let CalcXp = function(duck1){
     }
 }
 
+let roundRestart = () =>{
+    $("#duckselect").css("display", "block");
+    $("#duckpond").append($("#duck"+edIndex));
+    $(".select").css('pointer-events', 'auto');
+    $("#statbox").css("display","block");
+    $("#duckselect").removeClass('col-12');
+    $("#duckselect").addClass('col-8');
+    
+    duckArray[pdIndex].health = duckArray[pdIndex].maxHealth;
+    duckArray[edIndex].health = duckArray[edIndex].maxHealth;
+    select = true;
+    SelectDuck();
+    lockIn();
+
+}
 
 
 let Attack =function(duck1,duck2){
     let damage = (duck1.attack+((duck1.level-1)*5)) - Math.floor(duck2.defense*.5);
     if(duck2.health <= 0){
         console.log("You have defeated "+duck2.name+"!");
+        wins++
+        roundRestart();
     }
     if(duck2.health >0 && duck1.health >0){
     duck2.health -= damage;
@@ -93,9 +117,12 @@ let Defend = function(duck1,duck2) {
 
     if(duck1.health <= 0){
         console.log("You have been defeated");
+        roundRestart();  
+        defeat++;
     }
     if(duck1.health >= 0 && duck2.health >= 0){
-        duck1.health -=damage;     
+        duck1.health -=damage;   
+        
         
     }
 }
@@ -149,10 +176,7 @@ let lockIn = function(){
             if(playerDuck && enemyDuck && $("#duck"+pdIndex) != $('#duck'+edIndex)){
                 atkBtnOn = true;
                 $("#duckselect").css("display", "none");
-                $('[select="this"]').removeAttr("select");
-               
-                
-                
+                   
                 
             }
 
@@ -180,7 +204,7 @@ let lockIn = function(){
                 console.log("click");
                 // $("#duck"+index).css('pointer-events', 'none'); // disable
 
-                $("#statbox").remove();
+                $("#statbox").css("display","none");
                 $("#duckselect").removeClass('col-8');
                 $("#duckselect").addClass('col-12');
                 
@@ -204,16 +228,12 @@ attackbtn = () =>  {
     $("#atkbtn").on("click",function(){
         
         if(atkBtnOn){
-
         Attack(duckArray[pdIndex],duckArray[edIndex]);
         console.log(duckArray[pdIndex].health,duckArray[edIndex].health);
 
         Defend(duckArray[pdIndex],duckArray[edIndex]);
         console.log(duckArray[pdIndex].health,duckArray[edIndex].health);
-        
-        }
-
-        
+        }    
     })
 }
 
