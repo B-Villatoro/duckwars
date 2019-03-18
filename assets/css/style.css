@@ -1,0 +1,71 @@
+body{
+    background-image: url("../images/starfleet.jpg");
+    background-size: 100% ;
+    
+    color: white;
+}
+header{
+    background-image: url("../images/max-mckinnon-galaxy.jpg");
+    background-size: 100% 100%;
+    font-weight: 1000;
+    font-size: 500%;
+    -webkit-text-stroke: 2px  black;
+    color: rgba(255, 255, 255, .7);
+    font-family: 'Teko', sans-serif;  
+    border-bottom: 5px solid rgba(255, 255, 255, 0.8);
+}
+footer{
+    color: rgba(255, 255, 255, 1);
+    
+    border-top: 5px solid rgba(255, 255, 255, 0.5);
+    
+}
+
+.water{
+    border: 5px solid blue;
+}
+
+@media screen and (max-width: 416px){
+    header{
+        font-size:300%;
+    }
+}
+.row{
+    margin: 0 10px;
+}
+
+#duckselect{
+    background-color: rgba(0,255,255,.5);
+}
+
+#statbox{
+    background-color: rgba(255,0,20,.5);
+}
+
+#duck0{
+    height: 200px;
+    width: 200px;
+    background-image: url("../images/ducky.jpg");
+    background-size: 100% 100%;
+}
+
+#duck1{
+    height: 200px;
+    width: 200px;
+    background-image: url("../images/ducky.jpg");
+    background-size: 100% 100%;
+}
+
+#duck2{
+    height: 200px;
+    width: 200px;
+    background-image: url("../images/ducky.jpg");
+    background-size: 100% 100%;
+}
+
+#duck3{
+    height: 200px;
+    width: 200px;
+    background-image: url("../images/ducky.jpg");
+    background-size: 100% 100%;
+}
