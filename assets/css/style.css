@@ -1,7 +1,15 @@
+html{
+    -webkit-user-select: none;  
+    -moz-user-select: none;    
+    -ms-user-select: none;      
+    user-select: none;
+}
 body{
     background-image: url("../images/starfleet.jpg");
     background-size: 100% ;
-    
+   
+    font-weight: 580;
+    font-size: 180%;
     color: white;
 }
 header{
@@ -69,3 +77,27 @@ footer{
     background-image: url("../images/ducky.jpg");
     background-size: 100% 100%;
 }
+
+.selectOutline{
+    outline: 5px solid red;
+}
+
+
+.hideDiv{
+    display: none;
+}
+.showDiv{
+    display: block;
+}
+#fightbox{
+    background-color: rgba(150, 150, 151, .8)
+}
+
+.fail{
+    color: red;
+}
+
+.win{
+    color: rgba(0, 255, 0, .9);
+}
+
