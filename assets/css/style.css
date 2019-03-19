@@ -6,10 +6,9 @@ html{
 }
 body{
     background-image: url("../images/starfleet.jpg");
-    background-size: 100% ;
-   
+    background-size: 100% ; 
     font-weight: 580;
-    font-size: 180%;
+    font-size: 150%;
     color: white;
 }
 header{
@@ -21,6 +20,10 @@ header{
     color: rgba(255, 255, 255, .7);
     font-family: 'Teko', sans-serif;  
     border-bottom: 5px solid rgba(255, 255, 255, 0.8);
+}
+div{
+    font-family: 'Teko', sans-serif;
+    font-size: 100%;
 }
 footer{
     color: rgba(255, 255, 255, 1);
@@ -53,14 +56,15 @@ footer{
 #duck0{
     height: 200px;
     width: 200px;
-    background-image: url("../images/ducky.jpg");
+    background-image: url("../images/obiwanduckoboi.jpg");
     background-size: 100% 100%;
 }
 
 #duck1{
     height: 200px;
     width: 200px;
-    background-image: url("../images/ducky.jpg");
+    background-color: white;
+    background-image: url("../images/duckSkypenguil.jpg");
     background-size: 100% 100%;
 }
 
@@ -74,7 +78,7 @@ footer{
 #duck3{
     height: 200px;
     width: 200px;
-    background-image: url("../images/ducky.jpg");
+    background-image: url("../images/duckMaul.jpg");
     background-size: 100% 100%;
 }
 

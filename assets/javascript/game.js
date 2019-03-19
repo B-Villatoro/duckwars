@@ -1,12 +1,12 @@
 // Constant Objects
 const levelXp ={
-    2:50,
-    3:100,
-    4:200,
-    5:350,
-    6:500,
-    7:700,
-    8:950,
+    2:150,
+    3:200,
+    4:300,
+    5:450,
+    6:600,
+    7:800,
+    8:1050,
 }
 //Global variables
 let duckArray = []
@@ -30,43 +30,49 @@ duckArray = [
     maxHealth : 100,
     name: "Obi Wan Duckobi",
     health: 100,
-    attack: 10,
+    attack: 20,
     defense: 12,
     xp : 0,
     level : 1,
+    wins: 0,
+    defeat: 0,
     },
 
     {
     maxHealth : 110,        
     name: "Duck Skywaddler",
     health: 110,
-    attack: 8,
+    attack: 18,
     defense: 18,
     xp : 0,
     level : 1,
-
+    wins: 0,
+    defeat: 0,
     },
 
     {
     maxHealth : 90,
     name: "Duck Vader",
     health: 90,
-    attack: 18,
+    attack: 28,
     defense: 5,
     xp : 0,
     level : 1,
+    wins: 0,
+    defeat: 0,
 
     },
 
     {
-    maxHealth: 70,
+    maxHealth: 50,
     name: "Duck Maul",
-    health: 70,
-    attack: 25,
+    health: 50,
+    attack: 45,
     defense: 1,
     xp : 0,
     level : 1,
-
+    wins: 0,
+    defeat: 0,
     },
 ]
 
@@ -103,15 +109,13 @@ let roundRestart = () =>{
 
 let attack =function(duck1,duck2){
     let damage = (duck1.attack+((duck1.level-1)*5)) - Math.floor(duck2.defense*.5);
-    if(duck2.health <= 0){
-        wins++
-       
+    if(duck2.health < 0){
+        duckWin();
     }
     if(duck2.health >0 && duck1.health >0){
     duck2.health -= damage;
     calcXp(duck1);
-    }
-    
+    } 
 }
 
 let Defend = function(duck1,duck2) {
@@ -119,8 +123,8 @@ let Defend = function(duck1,duck2) {
 
     if(duck1.health <= 0){
         console.log("You have been defeated");
-          
-        defeat++;
+    
+        duckLose();
     }
     if(duck1.health >= 0 && duck2.health >= 0){
         duck1.health -=damage;   
@@ -128,7 +132,12 @@ let Defend = function(duck1,duck2) {
         
     }
 }
-
+let duckWin = function(){
+    duckArray[pdIndex].wins+=.5;
+}
+let duckLose = function(){
+    duckArray[pdIndex].defeat +=.5;
+}
 let assignDucks = function(){
     for(var i =0; i < 4; i++){     
        $("#duck"+i).attr(duckArray[i]);
@@ -138,9 +147,8 @@ let assignDucks = function(){
 let selectToStats = function(){
     if(index >-1){
         $("#stats").html(duckArray[index].name +"<br>Health: "+duckArray[index].health+"<br>Attack: "+duckArray[index].attack+"<br>Defense: "
-        +duckArray[index].defense+"<br>Level: "+duckArray[index].level)+"<br>Wins: "+wins+"<br>Defeated: "+defeat; 
-
-        return duckArray[index];   
+        +duckArray[index].defense+"<br>Level: "+duckArray[index].level+"<br>Wins: "+duckArray[index].wins+"<br>Defeated: "+duckArray[index].defeat); 
+ 
     }
 }
     
@@ -234,12 +242,14 @@ let displayHealth = function(){
     $('#healthBox').html("Your Health "+duckArray[pdIndex].health+"<br>Enemy Health "+duckArray[edIndex].health);
     if(duckArray[pdIndex].health <=0){
         $("#healthBox").html('<br><span class="fail"> Defeat</span>');
+        duckLose();
         backToPond();
         
         
     }
     if(edIndex > -1 && duckArray[edIndex].health <= 0){
         $("#healthBox").html('<br><span class="win"> Success!</span>');
+        duckWin();
         backToPond();
         
 
