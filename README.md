@@ -1,5 +1,4 @@
-# duckwars
-### Duck Wars!!!
+# Duck Wars!!!
 ## try to best your opponent in this intuitive rpg game! Level up your favorite duck and try to beat all the other ducks!
 
 
